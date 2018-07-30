@@ -21,7 +21,7 @@ public:
         tot += n;
         printf("tot = %d\n", tot);
         void *ret = malloc(n);
-        // printf("%p allo\n", ret);
+        printf("%p allo\n", ret);
         // free(ret);
         // printf("im ok\n");
         // assert(n == 624 || n == 40);
@@ -32,8 +32,9 @@ public:
         return ret;
     }
     static void _deallocate(void *ptr){
-        // printf("im in _deallocate %p\n", ptr);
+        printf("im in _deallocate %p\n", ptr);
         free(ptr);
+        printf("free ok\n");
     }
     static func set_handler(func ptr){
         func old = oom_handler;

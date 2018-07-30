@@ -97,19 +97,21 @@ public:
             }
             // printf("im here\n");
             // printf("im in done\n");
-            int index = bytes / 8 - 1;
-            for(int i = index; i < THRESHOLD / 8; i++){
-                if(list_head[i]){
-                    start_free = (char*)list_head[i];
-                    leave_size =  (index + 1) * 8;
-                    list_head[i] = (void*)*(long**)list_head[i];
-                    return get_pool(bytes, n);
-                }
-            }
             size_t req_tot = 2 * tot_size + heap_size;
-            // printf("%ld\n", req_tot);
             req_tot = (req_tot + 7) / 8 * 8; 
             start_free = (char*) add_pool(req_tot);
+            if(start_free == 0){
+                int index = bytes / 8 - 1;
+                for(int i = index; i < THRESHOLD / 8; i++){
+                    if(list_head[i]){
+                        start_free = (char*)list_head[i];
+                        leave_size =  (index + 1) * 8;
+                        list_head[i] = (void*)*(long**)list_head[i];
+                        return get_pool(bytes, n);
+                    }
+                }
+            }
+            
             leave_size = req_tot;
             heap_size = 128 + heap_size;
             return get_pool(bytes, n);

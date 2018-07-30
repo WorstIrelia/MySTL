@@ -53,6 +53,12 @@ public:
     typedef T* pointer;
     typedef T& reference;
     typedef T  type;
+    template<typename U>
+    struct rebind{
+        typedef allocator<U> other;
+    };
+
+
     static pointer allocate(size_t n){
         size_t tot_size = ALIGN(n * sizeof(type));
         if(tot_size > THRESHOLD){
@@ -76,6 +82,10 @@ public:
     static _default_allocator::func set_handler(_default_allocator::func ptr){
         return _default_allocator::set_handler(ptr);
     }
+
+
+    
+
 protected:
 
 };

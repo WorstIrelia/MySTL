@@ -6,18 +6,18 @@ namespace fc{
 
 
 
-template<typename T, typename Alloc = allocator<_list_node<T>> >
+template<typename T, typename Alloc = allocator<T> >
 class list{
 
 
 
 public:
-    typedef _list_iterator<T, T&, T*>           iterator;   
-    typedef _list_node<T>*                      node;    
-    typedef Alloc                               alloc;
-    typedef T&                                  reference;
-    typedef T*                                  pointer;
-    typedef T                                   value_type;
+    typedef _list_iterator<T, T&, T*>                               iterator;   
+    typedef _list_node<T>*                                          node;    
+    typedef typename Alloc::template rebind<_list_node<T>>::other   alloc;
+    typedef T&                                                      reference;
+    typedef T*                                                      pointer;
+    typedef T                                                       value_type;
 private:
     iterator mark;
 public:
@@ -77,6 +77,7 @@ public:
     bool empty(){
         return mark.ptr->next == mark.ptr;
     }
+    
 
 
 };

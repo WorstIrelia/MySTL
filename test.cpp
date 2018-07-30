@@ -28,9 +28,27 @@ struct prime{
 
 };
 
+template<typename T>
+struct test{
+    T x;
+    template<typename U>
+    struct rebind{
+        typedef test<U> other;
+    };
+};
+
+
 
 int main(){
-    //cout << fib<10>::ret << endl;
+    test<int>a;
+    cout << sizeof(a.x) <<endl;
+    test<int>::rebind<double>::other b;
+    cout<< sizeof(b.x) << endl;
+
+
+
+
+    cout << fib<10>::ret << endl;
     fc::list<int>l;
     for(int i = 0; i < 5; i++){
         l.push_back(i);
@@ -50,10 +68,14 @@ int main(){
         ++it;
     }
     *it = 99999;
+    // *ptr = 123445;
+    cout << &it << endl;
     for(auto elem: l){
         cout << elem << endl;
     }
     l.erase(it);
+
+
 
     for(auto elem: l){
         cout << elem << endl;

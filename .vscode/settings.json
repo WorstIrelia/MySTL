@@ -12,6 +12,7 @@
         "ratio": "cpp",
         "system_error": "cpp",
         "type_traits": "cpp",
-        "scoped_allocator": "cpp"
+        "scoped_allocator": "cpp",
+        "bitset": "cpp"
     }
 }

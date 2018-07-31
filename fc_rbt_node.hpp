@@ -6,8 +6,9 @@ namespace fc{
 
 template<typename T>
 struct _rbt_node:public _tree_node{
-    T value;
-    int color;
+    T       value;
+    size_t  size;
+    
 };
 
 

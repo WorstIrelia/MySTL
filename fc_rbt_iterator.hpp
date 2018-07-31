@@ -2,20 +2,25 @@
 #define _FC_RBT_ITERATOR_
 
 #include "fc_tree_iterator_base.hpp"
+#include "fc_tree_node_base.hpp"
 #include "fc_rbt_node.hpp"
 namespace fc{
 
 template<typename T, typename Ref, typename Pointer>
-struct _rbt_iterator:public _tree_iterator{
+class _rbt_iterator:public _tree_iterator{
+public:
     typedef _rbt_iterator<T, T&, T*>                    iterator;
     typedef _rbt_iterator<T, Ref, Pointer>              self;
     typedef T&                                          reference;
     typedef T*                                          pointer;
     typedef T                                           value_type;
-    typedef _rbt_node<T>*                               node;
+    typedef _rbt_node<T>*                               rbt_node_ptr;
+    typedef _tree_node*                                 tree_node_ptr;
+public:    
     _rbt_iterator(){}
-    _rbt_iterator(node ptr):_tree_iterator((_tree_node*)ptr){}
-    _rbt_iterator(_tree_node* ptr):_tree_iterator(ptr){}
+    _rbt_iterator(rbt_node_ptr ptr):_tree_iterator((tree_node_ptr)ptr){}
+    _rbt_iterator(tree_node_ptr ptr):_tree_iterator(ptr){}
+    ~_rbt_iterator(){}
     bool operator==(const iterator& rsh){
         return base_ptr == rsh.base_ptr;
     }
@@ -23,7 +28,7 @@ struct _rbt_iterator:public _tree_iterator{
         return base_ptr != rsh.base_ptr;
     }
     reference operator*() const{
-        return ((node)base_ptr)->value;
+        return rbt_node_ptr(base_ptr)->value;
     }
     pointer operator->() const{
         return &(operator*());
@@ -41,7 +46,7 @@ struct _rbt_iterator:public _tree_iterator{
         decrecement();
         return *this;
     }
-    self operator--(int ){
+    self operator--(int){
         self ret = *this;
         --(*this);
         return ret;

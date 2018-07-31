@@ -4,18 +4,19 @@
 #include "fc_tree_node_base.hpp"
 
 namespace fc{
-struct _tree_iterator{
-    typedef _tree_node* pointer;
-    pointer base_ptr;
+
+class _tree_iterator{
+public:
+    typedef _tree_node*    pointer;
+
+public:
+    
     _tree_iterator(){}
     _tree_iterator(pointer ptr):base_ptr(ptr){}
     ~_tree_iterator(){}
-    void get_min(){
-        while(base_ptr->lson) base_ptr = base_ptr->lson;
-    }
-    void get_max(){
-        while(base_ptr->rson) base_ptr = base_ptr->rson;
-    }
+
+
+protected:
     void increcement(){
         if(base_ptr->rson){
             base_ptr = base_ptr->rson;
@@ -24,7 +25,6 @@ struct _tree_iterator{
         else{
             while(base_ptr->father && base_ptr->father->rson == base_ptr) base_ptr = base_ptr->father;
             base_ptr = base_ptr->father;
-
         }
     }
     void decrecement(){
@@ -38,6 +38,9 @@ struct _tree_iterator{
         }
     }
 
+public:
+    pointer base_ptr;    
+    
 
 };
 
